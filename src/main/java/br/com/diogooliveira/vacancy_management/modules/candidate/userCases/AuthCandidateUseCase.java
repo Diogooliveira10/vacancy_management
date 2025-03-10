@@ -22,7 +22,7 @@ import br.com.diogooliveira.vacancy_management.modules.candidate.dto.AuthCandida
 @Service
 public class AuthCandidateUseCase {
 
-    @Value("${security.token.candidate}")
+    @Value("${security.token.secret.candidate}")
     private String secretKey;
     
     @Autowired
