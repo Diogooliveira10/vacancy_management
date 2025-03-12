@@ -9,5 +9,9 @@ import br.com.diogooliveira.vacancy_management.modules.company.entities.JobEntit
 
 public interface JobRepository extends JpaRepository<JobEntity, UUID> {
 
-    List<JobEntity> findByDescriptionContaining(String filter);
+    // "contains - LIKE "
+
+    // Select * from job where description like %filter%
+
+    List<JobEntity> findByDescriptionContainingIgnoreCase(String filter);
 }
