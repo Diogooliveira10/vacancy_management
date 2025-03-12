@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +29,21 @@ public class JobEntity {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @Schema(
+        example = "Job opening for design."
+    )
     private String description;
+
+    @Schema(
+        example = "GYMPass, Health Insurance, Dental Plan, Home office assistance, Day off."
+    )
     private String benefits;
 
     @NotBlank(message = "This field is required.")
+    @Schema(
+        example = "MID-LEVEL"
+    )
     private String level;
 
     @ManyToOne()
