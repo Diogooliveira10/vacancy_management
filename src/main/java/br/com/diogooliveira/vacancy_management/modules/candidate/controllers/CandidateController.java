@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.diogooliveira.vacancy_management.modules.candidate.CandidateEntity;
+import br.com.diogooliveira.vacancy_management.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.diogooliveira.vacancy_management.modules.candidate.userCases.CreateCandidateUseCase;
 import br.com.diogooliveira.vacancy_management.modules.candidate.userCases.ListAllJobsByFilterUseCase;
 import br.com.diogooliveira.vacancy_management.modules.candidate.userCases.ProfileCandidateUseCase;
@@ -54,6 +55,33 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(
+        name = "Candidate",
+        description = "Candidate Information."
+    )
+    @Operation(
+        summary = "Candidate profile.",
+        description = "This function is responsible for retrieving the candidate's profile information."
+    )
+    @ApiResponses({
+        @ApiResponse(
+            responseCode = "200",
+            content = {
+                @Content(
+                    schema = @Schema(
+                        implementation = ProfileCandidateResponseDTO.class
+                    )
+                )
+            }
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "User not found."
+        )
+    })
+    @SecurityRequirement(
+        name = "jwt_auth"
+    )
     public ResponseEntity<Object> get(HttpServletRequest request) {
 
         var idCandidate = request.getAttribute("candidate_id");
@@ -78,7 +106,7 @@ public class CandidateController {
         summary = "List of available job openings for the candidate.",
         description = "This function is responsible for listing all available job openings based on the filter."
     )
-    @ApiResponses(
+    @ApiResponses({
         @ApiResponse(
             responseCode = "200",
             content = {
@@ -91,7 +119,7 @@ public class CandidateController {
                 )
             }
         )
-    )
+    })
     @SecurityRequirement(
         name = "jwt_auth"
     )
