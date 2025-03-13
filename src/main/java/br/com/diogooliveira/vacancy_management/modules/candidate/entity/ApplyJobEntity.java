@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 
 import br.com.diogooliveira.vacancy_management.modules.candidate.CandidateEntity;
 import br.com.diogooliveira.vacancy_management.modules.company.entities.JobEntity;
@@ -14,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class ApplyJobEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToAny
+    @ManyToOne
     @JoinColumn(
         name = "candidate_id",
         insertable = false,
@@ -38,7 +38,7 @@ public class ApplyJobEntity {
     )
     private CandidateEntity candidateEntity;
 
-    @ManyToAny
+    @ManyToOne
     @JoinColumn(
         name = "job_id",
         insertable = false,
