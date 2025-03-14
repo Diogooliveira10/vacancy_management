@@ -1,5 +1,9 @@
 package br.com.diogooliveira.vacancy_management.modules.company.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,7 +67,7 @@ public class CreateJobControllerTest {
             .level("LEVEL_TEST")
             .build();
 
-            var result = mvc.perform(MockMvcRequestBuilders.post("/company/job/")
+        var result = mvc.perform(MockMvcRequestBuilders.post("/company/job/")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtils.objectToJSON(createJobDTO))
             .header("Authorization", TestUtils.generateToken(company.getId(),
@@ -73,4 +77,22 @@ public class CreateJobControllerTest {
         System.out.println(result);
     }
 
+    @Test
+    public void should_not_be_able_to_create_a_new_job_if_company_not_found() throws Exception {
+        var createJobDTO = CreateJobDTO.builder()
+            .benefits("BENEFITS_TEST")
+            .description("DESCRIPTION_TEST")
+            .level("LEVEL_TEST")
+            .build();
+
+        try {
+            mvc.perform(MockMvcRequestBuilders.post("/company/job/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtils.objectToJSON(createJobDTO))
+                .header("Authorization", TestUtils.generateToken(UUID.randomUUID(),
+                    "JAVACANCY_@123#")));
+        } catch (Exception e) {
+            assertThat(e).isInstanceOf(getClass());
+        }
+    }
 }
